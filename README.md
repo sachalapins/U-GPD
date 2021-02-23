@@ -1,4 +1,5 @@
 # U-GPD Transfer Learning model for detecting seismic phase arrivals at Nabro volcano
+[![DOI](https://zenodo.org/badge/314559222.svg)](https://zenodo.org/badge/latestdoi/314559222)
 
 This repository contains two notebooks to accompany the paper **_'A Little Data Goes A Long Way: Automating Seismic Phase Arrival Picking at Nabro Volcano with Transfer Learning'_**, currently under consideration for publication by [Journal of Geophysical Research: Solid Earth](https://agupubs.onlinelibrary.wiley.com/journal/21699356). Preprint is available on [ESSOAR](https://www.essoar.org/) at: (_link coming soon_).
 
