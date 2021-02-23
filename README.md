@@ -6,7 +6,9 @@ The first notebook ([1_UGPD_training.ipynb](https://github.com/sachalapins/U-GPD
 
 The second notebook ([2_UGPD_run.ipynb](https://github.com/sachalapins/U-GPD/blob/main/2_UGPD_run.ipynb)) demonstrates how to run our best, trained transfer learning model from the first notebook over 24 hours of seismic data from Nabro volcano and locate events using our model's phase arrival picks and [NonLinLoc](http://alomax.free.fr/nlloc/).
 
-Both notebooks are designed to be run in Google Colab and only require that you have a Google account. If any of the code or results presented are useful then please consider citing the paper above (once a DOI is available) or the archived version of this repository from Zenodo.
+Both notebooks are designed to be run in Google Colab and only require that you have a Google account. 
+
+If any of the code or results presented are useful then please consider citing the paper above (once a DOI is available) or the archived version of this repository from Zenodo.
 
 The training, validation and test sets can be downloaded from Zenodo at https://doi.org/10.5281/zenodo.4498549.
 
