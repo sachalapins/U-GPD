@@ -9,7 +9,7 @@ The second notebook ([2_UGPD_run.ipynb](https://github.com/sachalapins/U-GPD/blo
 
 Both notebooks are designed to be run in Google Colab and only require that you have a Google account. Sometimes notebooks fail to render on GitHub, so you won't be able to view or run them if that happens. This is a well-known problem among GitHub users that appears to happen sporadically. If you can't see the notebooks for whatever reason, try again at a later time and they should hopefully work okay.
 
-If any of the code or results presented are useful then please consider citing the paper above (once a DOI is available) or the archived version of this repository from Zenodo.
+If any of the code or results presented are useful then please consider citing the paper above (once a DOI is available) or the archived version of this repository from Zenodo (https://doi.org/10.5281/zenodo.4558122).
 
 The training, validation and test sets can be downloaded from Zenodo at https://doi.org/10.5281/zenodo.4498549.
 
