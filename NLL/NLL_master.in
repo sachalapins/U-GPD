@@ -80,7 +80,7 @@ LOCCOM 80km x 80 km x 41.5 km search grid at 0.5km spacing.
 # (LOCFILES <obs file> obs_type  <travel-time grid files path/root> <output file path/root>)
 #    (char[])  obs_type : (NLLOC_OBS, HYPO71, HYPOELLIPSE, RENASS_DEP, SEISAN)
 #
-LOCFILES ./NLL/picks/pickfile.hpf HYPO71 ./NLL/time/80km0.5 ./NLL/loc/ALL
+LOCFILES ./NLL/picks/pickfile.hpf NLLOC_OBS ./NLL/time/80km0.5 ./NLL/loc/ALL
 
 # output hypocenter file types
 # (LOCHYPOUT type1, type2, ...)
@@ -159,10 +159,8 @@ LOCPHASEID  S   S s G SN SG
 
 # quality to error mapping (for HYPO71, etc)
 # (LOCQUAL2ERR Err0 Err1 Err2 ... )
-# the following quality mapping is default from Hypoellipse documentation
+# the following quality mapping is default from Hypoellipse documentation (I use equivalent in NLLOC_OBS pickfile)
 LOCQUAL2ERR 0.05 0.1 0.2 0.5 99999.9
-### These correspond with 0,1,2,3,4 pick weightings so changed to the ones I used when QC'ing picks:
-#LOCQUAL2ERR 0.1 0.2 0.33 0.5 99999.9
 
 # phase statistics parameters
 # (LOCPHSTAT RMS_Max, NRdgs_Min, Gap_Max, P_ResMax, S_ResMax)
