@@ -74,7 +74,7 @@ LOCSIG Sacha Lapins, University of Bristol, 2021
 
 # comment
 # (LOCCOM comment)
-LOCCOM 80km x 80 km x 41.5 km search grid at 0.5km spacing.
+LOCCOM 80km x 80 km x 41.5 km search grid at 0.5km spacing. P-waves only.
 
 # input  grid filenames root, output filename
 # (LOCFILES <obs file> obs_type  <travel-time grid files path/root> <output file path/root>)
