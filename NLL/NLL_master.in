@@ -4,7 +4,7 @@
 
 # control (CONTROL message_flag (0:silent,1:few messages,2:verbose,...),
 #		RandomNumSeed)
-CONTROL 3 54321
+CONTROL 0 54321
 
 # -----------------------------------------------------------------------------
 # lat/long to rect grid transformation
