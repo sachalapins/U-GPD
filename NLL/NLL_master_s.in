@@ -24,7 +24,7 @@ TRANS SIMPLE 13.0 41.25 0
 VGOUT ./NLL/model/80km0.5   #Output File Root Name
 
 # wave type
-VGTYPE P
+VGTYPE S
 
 # grid description
 # 80 x 80 x 40 km 3D grid with 0.5 km spacing
@@ -44,7 +44,7 @@ LAYER 25.0 7.40 0.00 4.20 0.00 2.94 0.0
 # input, output filename root
 # (GTFILES <input file root> <output file root> wave_type (P, S))
 
-GTFILES  ./NLL/model/80km0.5  ./NLL/time/80km0.5 P
+GTFILES  ./NLL/model/80km0.5  ./NLL/time/80km0.5 S
 
 # time grid modes
 GTMODE GRID3D ANGLES_YES
@@ -140,7 +140,7 @@ LOCGRID  161 161 84  0.0 0.0 -1.5  0.5 0.5 0.5   PROB_DENSITY  SAVE
 #    (float)   minimum_dist_sta_to_grid (-1 for no min)
 #    (int)   flag indicating if duplicate arrivals used for location (1=reject, 0=use if time diff < sigma / 2)
 #            duplicate arrivals have same station label and phase name
-LOCMETH EDT_OT_WT  9999  4 -1 -1 1.76 -1 -1 0
+LOCMETH EDT_OT_WT  9999  4 -1 -1 -1 -1 -1 0
 
 # gaussian model error parameters
 # (LOCGAU Sigma_T (s), CorrLen (km))
