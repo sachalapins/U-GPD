@@ -1,0 +1,183 @@
+# =============================================================================
+# Generic control file statements
+# =============================================================================
+
+# control (CONTROL message_flag (0:silent,1:few messages,2:verbose,...),
+#		RandomNumSeed)
+CONTROL 0 54321
+
+# -----------------------------------------------------------------------------
+# lat/long to rect grid transformation
+# -----------------------------------------------------------------------------
+
+# map projection / transformation
+TRANS SIMPLE 13.0 41.25 0
+
+
+# =============================================================================
+# Vel2Grid control file statements
+# =============================================================================
+
+# output filename root
+# (VGOUT <output file root>)
+# Layer Grid
+VGOUT ./NLL/model/80km0.5   #Output File Root Name
+
+# wave type
+VGTYPE S
+
+# grid description
+# 80 x 80 x 40 km 3D grid with 0.5 km spacing
+# Highest station is 1.32km asl so go up to -1.5
+VGGRID 161 161 84 0.0 0.0 -1.5 0.5 0.5 0.5 SLOW_LEN 						#Size and Type of 3D Velocity Grid
+
+# model layers (LAYER depth, Vp_top, Vp_grad, Vs_top, Vs_grad, p_top, p_grad)
+LAYER -1.5 4.10 0.44 2.33 0.253 2.75 0.0
+LAYER 3.0 6.10 0.14 3.47 0.078 2.79 0.0
+LAYER 8.0 6.80 0.0353 3.86 0.02 2.79 0.0
+LAYER 25.0 7.40 0.00 4.20 0.00 2.94 0.0
+
+# =============================================================================
+# Grid2Time control file statements
+# =============================================================================
+
+# input, output filename root
+# (GTFILES <input file root> <output file root> wave_type (P, S))
+
+GTFILES  ./NLL/model/80km0.5  ./NLL/time/80km0.5 S
+
+# time grid modes
+GTMODE GRID3D ANGLES_YES
+
+# source description (multiple sources can be specified)
+# (GTSRCE  label  x_srce  y_srce   z_srce   elev)
+GTSRCE NAB1 LATLON 13.3873 41.6554 -1.329 0.0
+GTSRCE NAB2 LATLON 13.4285 41.7146 -1.207 0.0
+GTSRCE NAB3 LATLON 13.3759 41.7459 -1.283 0.0
+GTSRCE NAB4 LATLON 13.4788 41.6786 -0.703 0.0
+GTSRCE NAB5 LATLON 13.3151 41.7082 -1.272 0.0
+GTSRCE NAB6 LATLON 13.4352 41.6410 -0.965 0.0
+GTSRCE NAB7 LATLON 13.4256 41.7562 -0.893 0.0
+GTSRCE NAB8 LATLON 13.3348 41.7983 -0.655 0.0
+
+
+# Podvin & Lecomte Finite Difference params
+GT_PLFD  1.0e-3  2
+
+# =============================================================================
+# NLLoc control file statements
+# =============================================================================
+
+# signature
+# (LOCSIG signature)
+LOCSIG Sacha Lapins, University of Bristol, 2021
+
+# comment
+# (LOCCOM comment)
+LOCCOM 80km x 80 km x 41.5 km search grid at 0.5km spacing. P-waves and S-waves with defined P-wave velocity model and constant Vp/Vs = 1.76.
+
+# input  grid filenames root, output filename
+# (LOCFILES <obs file> obs_type  <travel-time grid files path/root> <output file path/root>)
+#    (char[])  obs_type : (NLLOC_OBS, HYPO71, HYPOELLIPSE, RENASS_DEP, SEISAN)
+#
+LOCFILES ./NLL/picks/pickfile_s.hpf NLLOC_OBS ./NLL/time/80km0.5 ./NLL/loc_s/ALL
+
+# output hypocenter file types
+# (LOCHYPOUT type1, type2, ...)
+#    (char[])   typeN (SAVE_NLLOC_ALL, SAVE_NLLOC_SUM,SAVE_HYPO71_ALL, SAVE_HYPO71_SUM, SAVE_HYPOELL_ALL, SAVE_HYPOELL_SUM,	SAVE_HYPOINV_SUM, SAVE_NLLOC_OCTREE), SAVE_NLLOC_ALL SAVE_NLLOC_SUM  SAVE_HYPOINV_SUM SAVE_HYPOINVERSE_Y2000_ARC
+LOCHYPOUT  SAVE_NLLOC_ALL SAVE_HYPOINVERSE_Y2000_ARC SAVE_HYPOINV_SUM SAVE_HYPOELL_ALL SAVE_HYPO71_ALL SAVE_HYPOELL_SUM
+
+# search type
+# (LOCSEARCH search_type <params>)
+#    (char[])   search_type (GRID, MET (Metropolis), SA (Simulated Annealing))
+#    <params>:
+#	GRID NumScatterSamples
+#	MET  NumSamples NumLearn NumEquil BeginSave NumSkip
+#               StepInit StepMin StepFact ProbMin
+#	OCT init_num_cells_x, init_num_cells_y, init_num_cells_z,
+#		min_node_size, max_num_nodes, num_scatter,
+#		use_stations_density (1 = Weights oct-tree cell prob values used for subdivide decision
+#				in proportion to number of stations in oct-tree cell.
+#				Gives higher search priority to cells containing stations,
+#				stablises convergence to local events when global search used
+#				with dense cluster of local stations.),
+#		stop_on_min_node_size (1 = stop search when first min_node_size reached,
+#				0 = stop subdividing a given cell when min_node_size reached.)
+LOCSEARCH  OCT 42 42 11 0.05 40000 5000 1 1
+
+
+# location grids description
+# (LOCGRID  num_grid_x  num_grid_y  num_grid_z
+#	orig_grid_x  orig_grid_y  orig_grid_z
+#	d_grid_x d_grid_y d_grid_z
+#       type save_flag
+#    (float) num_grid_x/y/z : number of nodes along x/y/z axis
+#    (float)    orig_grid_x : x location of grid origin (0,0,0) in km pos east
+#    (float)    orig_grid_y : y location of grid origin (0,0,0) in km pos north
+#    (float)    orig_grid_z : z location of grid origin (0,0,0) in km pos down
+#    (float)   d_grid_x/y/x : grid spacing along  x/y/z axis
+#    (char[])  type : (PROB_DENSITY, MISFIT)
+#    (char[])  save_flag : (SAVE, NO_SAVE)
+# For Grid search, first grid is used for initial search.  Subsequent grids are
+# shifted in x/y/z so that they are centered on the minimum misfit hypocenter
+# x/y/z of the previous grid if x/y/z < -1.0e20.
+#
+LOCGRID  161 161 84  0.0 0.0 -1.5  0.5 0.5 0.5   PROB_DENSITY  SAVE
+
+# method
+# (LOCMETH method)
+#    (char[])   method (GAU_ANALYTIC, EDT, EDT_OT_WT)
+#          GAU_ANALYTIC - L2 norm following Tarantola and Valette (1982)
+#          EDT - Equal Differential Time (see )
+#          EDT_OT_WT - Weights EDT sum prob by variance of OT estimated over all pairs of readings.
+#                              Downweights locations with inconsistent OT estimates.
+#    (float)   maximum_dist_sta_to_grid (use very large value for no max)
+#    (int)   minimum_number_phases for location
+#    (int)   maximum_number_phases for location (-1 for no max)
+#    (int)   minimum_number_S_phases for location (-1 for no min)
+#    (float)   Vp/Vs ratio (< 0.0 to use S travel time grids)
+#    (int)   maximum_number_3D_grids to attempt to read into memory (-1 for no max)
+#    (float)   minimum_dist_sta_to_grid (-1 for no min)
+#    (int)   flag indicating if duplicate arrivals used for location (1=reject, 0=use if time diff < sigma / 2)
+#            duplicate arrivals have same station label and phase name
+LOCMETH EDT_OT_WT  9999  4 -1 -1 1.76 -1 -1 0
+
+# gaussian model error parameters
+# (LOCGAU Sigma_T (s), CorrLen (km))
+LOCGAU 0.1 0.0
+
+# travel-time dependent gaussian model error parameters
+# (LOCGAU2 SigmaTfraction,  SigmaTmin (s),  SigmaTmax (s))
+# travel time error is travel_time*SigmaTfraction, with max/min value = SigmaTmin/SigmaTmax
+LOCGAU2 0.05 0.0 5.0
+
+
+# phase identifier mapping
+# (LOCPHASEID phase  phase_id0 phase_id1 ...)
+LOCPHASEID  P   P p G PN PG
+LOCPHASEID  S   S s G SN SG
+
+# quality to error mapping (for HYPO71, etc)
+# (LOCQUAL2ERR Err0 Err1 Err2 ... )
+# the following quality mapping is default from Hypoellipse documentation (I use equivalent in NLLOC_OBS pickfile)
+LOCQUAL2ERR 0.05 0.1 0.2 0.5 99999.9
+
+# phase statistics parameters
+# (LOCPHSTAT RMS_Max, NRdgs_Min, Gap_Max, P_ResMax, S_ResMax)
+#    (float)   RMS_Max : max hypocenter RMS to include in ave res
+#    (float)   NRdgs_Min : min hypocenter num readings to include in ave res
+#    (float)   Gap_Max : max hypocenter gap (deg) to include in ave res
+#    (float)   P_ResMax : max abs(P res) to include in ave res
+#    (float)   S_ResMax : max abs(S res) to include in ave res
+#    (float)   S_ResMax : max abs(S res) to include in ave res
+#    (float)   Ell_Len3_Max : max ellipsoid major semi-axis length to include in ave res
+#    (float)   Hypo_Depth_Min : min hypo depth to include in ave res
+#    (float)   Hypo_Depth_Max : max hypo depth to include in ave res
+LOCPHSTAT 9999.0 -1 9999.0 9999.9 9999.9 9999.9 -9999.9 9999.9
+
+
+# take-off angles mode & minimum quality
+# (LOCANGLES angles_mode, min_quality)
+#    (char[])   angles_mode (ANGLES_YES, ANGLES_NO)
+#    (integer)   min_quality : minimum quality to use take-off angles
+LOCANGLES ANGLES_YES 5
